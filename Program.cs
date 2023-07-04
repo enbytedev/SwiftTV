@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace SwiftTV
 {
@@ -21,10 +18,10 @@ namespace SwiftTV
             {
                 string customCode = File.ReadAllText(filePath);
 
-                string jsCode = Transpile(customCode);
+                string outputCode = Transpile(customCode);
 
-                string outputFilePath = Path.ChangeExtension(filePath, ".js");
-                File.WriteAllText(outputFilePath, jsCode);
+                string outputFilePath = Path.ChangeExtension(filePath, ".swift");
+                File.WriteAllText(outputFilePath, outputCode);
 
                 Console.WriteLine($"Transpiled code has been written to: {outputFilePath}");
             }
@@ -39,7 +36,7 @@ namespace SwiftTV
         static void PrintHelpMessage()
         {
             Console.WriteLine("Usage: Swift (Taylor's Version) Transpiler <file-path>");
-            Console.WriteLine("Transpiles the Swift (Taylor's Version) code (.stv) in the specified file into JavaScript code.");
+            Console.WriteLine("Transpiles the Swift (Taylor's Version) code (.stv) in the specified file into Swift code.");
             Console.WriteLine();
             Console.WriteLine("Arguments:");
             Console.WriteLine("  <file-path>   The path to the file containing the Swift (Taylor's Version) code.");
@@ -55,15 +52,14 @@ namespace SwiftTV
         {
             Dictionary<string, string> keywordMap = new Dictionary<string, string>()
             {
-                { "speaknow", "console.log" },
+                { "speaknow", "print" },
                 { "glitter", "let" },
                 { "fountain", "var" },
-                { "quill", "const" },
                 { "delicate", "if" },
                 { "chill", "else" },
                 { "cool", "else if" },
                 { "longlive", "while" },
-                { "belongwithme", "require" },
+                { "belongwithme", "import" },
                 { "shortskirts", "false" },
                 { "tshirts", "true" },
                 { "itwas", "#800000"}
